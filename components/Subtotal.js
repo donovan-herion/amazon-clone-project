@@ -5,7 +5,17 @@ import { useRouter } from "next/router";
 
 function Subtotal() {
   const router = useRouter();
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
+
+  const handleClick = () => {
+    if (!user) {
+      router.push("/login");
+    } else if (basket.length) {
+      router.push("/payment");
+    } else {
+      alert("You don't have any items in your basket yet");
+    }
+  };
 
   return (
     <div className="subtotal">
@@ -28,7 +38,7 @@ function Subtotal() {
         prefix={"$"}
       />
 
-      <button onClick={() => router.push("/payment")}>Proceed to Checkout</button>
+      <button onClick={handleClick}>Proceed to Checkout</button>
     </div>
   );
 }

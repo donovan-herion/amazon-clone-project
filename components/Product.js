@@ -1,6 +1,7 @@
 import { useStateValue } from "./StateProvider";
 import { toast } from "react-toastify";
 import { uuid } from "uuidv4";
+import Image from "next/image";
 
 function Product({ id, title, price, image, rating }) {
   const [{ basket }, dispatch] = useStateValue();
@@ -50,7 +51,9 @@ function Product({ id, title, price, image, rating }) {
             })}
         </div>
       </div>
-      <img src={image} alt="" />
+      <div className="product__image-container">
+        <Image src={image} layout="fill" objectFit="contain" />
+      </div>
       <button
         onClick={() => {
           addToBasket();

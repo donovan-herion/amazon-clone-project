@@ -3,7 +3,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { useStateValue } from "../components/StateProvider";
 import Link from "next/link";
 import Image from "next/image";
-// import { auth } from "../helpers/firebase";
+import { auth } from "../helpers/firebase";
 import amazonLogo from "../public/amazon_PNG11.png";
 
 function Header() {
@@ -33,7 +33,11 @@ function Header() {
             <span className="header__optionLineTwo">{user ? "Sign Out" : "Sign In"}</span>
           </div>
         </Link>
-        <Link href="/orders">
+        <Link
+          href={{
+            pathname: "/orders",
+          }}
+        >
           <div className="header__option">
             <span className="header__optionLineOne">Your</span>
             <span className="header__optionLineTwo">Orders</span>

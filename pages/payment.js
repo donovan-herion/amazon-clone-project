@@ -1,4 +1,5 @@
 import Payment from "../components/Payment";
+import Header from "../components/Header";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -6,9 +7,12 @@ const promise = loadStripe("pk_test_51I2KRqFfwhAfciU4o1WVxeq5ZJjSQT81tZdAwxvIbYb
 
 function payment() {
   return (
-    <Elements stripe={promise}>
-      <Payment />
-    </Elements>
+    <>
+      <Header />
+      <Elements stripe={promise}>
+        <Payment />
+      </Elements>
+    </>
   );
 }
 

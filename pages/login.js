@@ -2,6 +2,7 @@ import { useState } from "react";
 import { auth } from "../helpers/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Header from "../components/Header";
 
 function login() {
   const router = useRouter();
@@ -14,7 +15,6 @@ function login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(auth => {
-        console.log(auth);
         router.push("/");
       })
       .catch(error => alert(error.message));
@@ -37,33 +37,36 @@ function login() {
   };
 
   return (
-    <div className="login">
-      <Link href="/">
-        <img className="login__logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" />
-      </Link>
+    <>
+      <Header />
+      <div className="login">
+        <Link href="/">
+          <img className="login__logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" />
+        </Link>
 
-      <div className="login__container">
-        <h1>Sign-in</h1>
+        <div className="login__container">
+          <h1>Sign-in</h1>
 
-        <form>
-          <h5>E-mail</h5>
-          <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+          <form>
+            <h5>E-mail</h5>
+            <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
 
-          <h5>Password</h5>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <h5>Password</h5>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
 
-          <button type="submit" className="login__signInButton" onClick={signIn}>
-            Sign In
+            <button type="submit" className="login__signInButton" onClick={signIn}>
+              Sign In
+            </button>
+          </form>
+
+          <p>By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.</p>
+
+          <button className="login__registerButton" onClick={register}>
+            Create your Amazon Account
           </button>
-        </form>
-
-        <p>By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.</p>
-
-        <button className="login__registerButton" onClick={register}>
-          Create your Amazon Account
-        </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
@@ -7,6 +7,7 @@ import CheckoutProduct from "../components/CheckoutProduct";
 import { useStateValue } from "../components/StateProvider";
 import { getBasketTotal } from "../helpers/reducer";
 import axios from "../helpers/axios";
+// import axios from "axios";
 import { db } from "../helpers/firebase";
 import { uuid } from "uuidv4";
 
@@ -23,26 +24,33 @@ function payment() {
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState(true);
+  const [clientSecretDiscoverd, setClientSecretDiscovered] = useState(false);
+  const [copiedCardNumber, setCopiedCardNumber] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(true);
 
   useEffect(() => {
-    // generate the special stripe secret which allows us to charge a customer
-    console.log(`/payments/create?total=${getBasketTotal(basket) * 100}`);
-    const getClientSecret = async () => {
-      const response = await axios({
-        method: "post",
-        // Stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
-      });
-      setClientSecret(response.data.clientSecret);
-    };
+    if (!clientSecretDiscoverd && basket.length) {
+      // generate the special stripe secret which allows us to charge a customer
+      console.log(`/payments/create?total=${Math.floor(getBasketTotal(basket) * 100)}`);
+      const getClientSecret = async () => {
+        const response = await axios({
+          method: "post",
+          // Stripe expects the total in a currencies subunits
+          url: `/api/payments?total=${Math.floor(getBasketTotal(basket) * 100)}`,
+        });
+        setClientSecret(response.data.clientSecret);
+        setClientSecretDiscovered(true);
+      };
 
-    getClientSecret();
+      getClientSecret();
+    } else if (!basket.length && shouldRedirect) {
+      router.push("/checkout");
+    }
   }, [basket]);
 
-  console.log("THE SECRET IS >>>", clientSecret);
-  console.log("👱", user);
-
   const handleSubmit = async event => {
+    setShouldRedirect(false);
+
     // do all the fancy stripe stuff...
     event.preventDefault();
     setProcessing(true);
@@ -81,13 +89,18 @@ function payment() {
     setError(event.error ? event.error.message : "");
   };
 
+  const handleClick = () => {
+    navigator.clipboard.writeText("42424242424242424242424");
+    setCopiedCardNumber(true);
+  };
+
   return (
     <div className="payment">
       <div className="payment__container">
         <h1>
           Checkout (
           <Link href="/checkout">
-            <p>{basket?.length} items</p>
+            <span>{basket?.length} items</span>
           </Link>
           )
         </h1>
@@ -126,7 +139,10 @@ function payment() {
 
             <form onSubmit={handleSubmit}>
               <CardElement onChange={handleChange} />
-              <p className="fake__card__number">ex: 42424242..4242...4242.4242 to fake payment</p>
+
+              <p className="fake__card__number" onClick={() => handleClick()}>
+                {!copiedCardNumber ? "CLICK TO COPY 42424242424242424242424 FAKE CARD NUMBER" : "CLICK TO COPY AGAIN"}
+              </p>
               <div className="payment__priceContainer">
                 <CurrencyFormat renderText={value => <h3>Order Total: {value}</h3>} decimalScale={2} value={getBasketTotal(basket)} displayType={"text"} thousandSeparator={true} prefix={"$"} />
                 <button disabled={processing || disabled || succeeded}>

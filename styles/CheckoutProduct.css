@@ -3,6 +3,13 @@
   margin: 20px 0;
 }
 
+.checkoutProduct__image-container {
+  position: relative;
+  min-height: 200px;
+  width: 20%;
+  margin: 1rem 0;
+}
+
 .checkoutProduct__info {
   padding: 20px 0 20px 20px;
 }

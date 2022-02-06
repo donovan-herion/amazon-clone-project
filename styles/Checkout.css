@@ -16,7 +16,23 @@
   border-bottom: 1px solid lightgray;
 }
 
+.checkout__left {
+  width: 100%;
+}
+
+.checkout__left-container {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  height: 120px;
+}
+
 @media (max-width: 1000px) {
+  .checkout__left-container {
+    display: none;
+    height: 250px;
+  }
+
   .checkout__ad {
     display: none;
   }

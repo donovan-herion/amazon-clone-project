@@ -5,6 +5,7 @@ import { useTransition, animated } from "react-spring";
 import { uuid } from "uuidv4";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
+import Image from "next/image";
 
 function checkout() {
   const [{ basket }, dispatch] = useStateValue();
@@ -43,18 +44,16 @@ function checkout() {
       <Header />
       <div className="checkout">
         <div className="checkout__left">
-          <img className="checkout__ad" src="https://images-na.ssl-images-amazon.com/images/G/02/UK_CCMP/TM/OCC_Amazon1._CB4234926668_.jpg" />
+          <div className="checkout__left-container">
+            <Image className="checkout__ad" src="https://images-na.ssl-images-amazon.com/images/G/02/UK_CCMP/TM/OCC_Amazon1._CB4234926668_.jpg" layout="fill" objectFit="contain" />
+          </div>
 
           <div>
             <h2 className="checkout__title">Your Shopping Basket</h2>
-            {console.log("transition", transition)}
-            {transition.map(({ item, i, props }) => {
-              return (
-                <animated.div key={uuid()} style={props} className="checkoutProduct">
-                  <CheckoutProduct key={uuid()} id={item.id} title={item.title} image={item.image} price={item.price} rating={item.rating} />
-                </animated.div>
-              );
-            })}
+
+            {basket.map((item, index) => (
+              <CheckoutProduct id={item.id} title={item.title} image={item.image} price={item.price} rating={item.rating} />
+            ))}
           </div>
         </div>
 

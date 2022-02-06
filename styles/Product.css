@@ -7,7 +7,7 @@
   margin: 10px;
   padding: 20px;
   width: 100%;
-  max-height: 400px;
+  max-height: 500px;
   min-width: 100px;
   z-index: 1;
 }
@@ -38,6 +38,13 @@
 .product__info {
   height: 100px;
   margin-bottom: 15px;
+}
+
+.product__image-container {
+  margin: 2rem;
+  width: 50%;
+  min-height: 200px;
+  position: relative;
 }
 
 .Toastify__toast-container {
