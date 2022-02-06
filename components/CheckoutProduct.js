@@ -2,7 +2,7 @@ import { useStateValue } from "../components/StateProvider";
 import Image from "next/image";
 
 function CheckoutProduct({ id, title, image, price, rating, hideButton }) {
-  const [dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
     dispatch({
