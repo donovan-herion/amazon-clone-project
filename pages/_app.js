@@ -11,6 +11,20 @@ import "../styles/Order.css";
 import "../styles/Product.css";
 import "../styles/Subtotal.css";
 
+import ProgressBar from "@badrap/bar-of-progress";
+import Router from "next/router";
+
+const progress = new ProgressBar({
+  size: 4,
+  color: "#F79B33",
+  className: "z-50",
+  delay: 100,
+});
+
+Router.events.on("routeChangeStart", progress.start);
+Router.events.on("routeChangeComplete", progress.finish);
+Router.events.on("routeChangeError", progress.finish);
+
 import { StateProvider } from "../components/StateProvider";
 import reducer, { initialState } from "../helpers/reducer";
 import Head from "next/head";
