@@ -16,4 +16,4 @@ This Clone project was recently build with react alone. I decided to migrate my 
 **Stripe**
 **Firebase**
 
-![gif](https://media.giphy.com/media/3o7btR4w5GK8CTpNOU/giphy.gif)
+![gif](https://media.giphy.com/media/l2QDSKSkhqITBLYBy/giphy.gif)
