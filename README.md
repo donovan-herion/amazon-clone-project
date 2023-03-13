@@ -1,4 +1,4 @@
-# Airbnb Clone Project
+# Amazon Clone Project
 
 [Link to the app](https://amazon-clone-project-donovan.vercel.app/)
 
